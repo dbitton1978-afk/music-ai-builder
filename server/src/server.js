@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import { initDB } from "./config/initDB.js";
 
 dotenv.config();
 
@@ -15,6 +16,12 @@ app.get("/", (req, res) => {
 
 const PORT = process.env.PORT || 10000;
 
-app.listen(PORT, () => {
-  console.log("Server running on port", PORT);
-});
+const startServer = async () => {
+  await initDB();
+
+  app.listen(PORT, () => {
+    console.log("Server running on port", PORT);
+  });
+};
+
+startServer();
